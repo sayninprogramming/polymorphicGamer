@@ -1,0 +1,33 @@
+
+import players # players.py modülünü içe aktarır.
+
+def main(): # Ana fonksiyon.
+    # Oyuncu 1: Fabian Delph (Temel Oyuncu)
+    player1 = players.Player("Fabian", "Delph", 22, "England")
+    player1.print_player()
+    print("-" * 30) # Ayırıcı.
+
+    # Oyuncu 2: Tony Parker (Lig Oyuncusu)
+    player2 = players.LeaguePlayer("Tony", "Parker", 28, "France", "Basketball", 36, 17, 19, 22)
+    player2.print_player()
+    player2.statistics() # Lig istatistikleri.
+    # Çıktı "Player points: 373" gösteriyor. LeaguePlayer.points() değeri döndürür.
+    print(f"Player points: {player2.points()}")
+    print("-" * 30) # Ayırıcı.
+
+    # Oyuncu 3: Jordan Larson (Milli Oyuncu)
+    # Çıktıdan alınan veriler: Yaş: 22, Ülke: USA, Branş: Voleybol, Lig Maçları: 21, Galibiyet: 16, Mağlubiyet: 5, Lig Skoru: 36
+    # Milli Maçlar: 8, Milli Skoru: 3
+    player3 = players.NationalPlayer("Jordan", "Larson", 22, "USA", "Volleyball", 21, 16, 5, 36, 8, 3) # [cite: 51] örnek bir değer
+    player3.print_player()
+    # NationalPlayer'ın statistics metodu milli maç istatistiklerini hesaplar ve yazdırır.
+    # Örnek çıktı "Scores per natinal game: 0.38" gösteriyor.
+    # Bir NationalPlayer için lig istatistiklerini de göstermek istenirse, super() aracılığıyla çağrılması veya ayrı bir metot olması gerekebilir.
+    # Sorun, NationalPlayer.statistics'in milli istatistikleri hesaplamasını istiyor.
+    # Çıktı, Jordan Larson için lig istatistiklerini değil, sadece milli istatistikleri gösteriyor.
+    player3.statistics() # Milli istatistikler.
+    player3.points()     # NationalPlayer.points() toplam puanları hesaplar ve yazdırır.
+    print("-" * 30) # Ayırıcı.
+
+if __name__ == "__main__": # Bu script doğrudan çalıştırıldığında.
+    main() # Ana fonksiyonu çağırır.
