@@ -1,0 +1,172 @@
+# players.py
+
+class Player: # Oyuncu sınıfı tanımlanıyor.
+    """
+    Genel bir oyuncuyu temsil eder.
+    Bu sınıf ana sınıf olacaktır[cite: 32].
+    Player sınıfının dört adet özel özelliği (firstName, lastName, age ve nation) olacaktır[cite: 33].
+    Sınıfın uygun __init__, erişimci ve değiştirici metotları olmalıdır[cite: 34].
+    """
+    def __init__(self, firstName, lastName, age, nation): # Yapıcı metot.
+        self.__firstName = firstName # Oyuncunun adını saklar.
+        self.__lastName = lastName   # Oyuncunun soyadını saklar.
+        self.__age = age             # Oyuncunun yaşını saklar.
+        self.__nation = nation       # Oyuncunun ülkesini saklar.
+
+    # Erişimci metotlar
+    def get_firstName(self): return self.__firstName
+    def get_lastName(self): return self.__lastName
+    def get_age(self): return self.__age
+    def get_nation(self): return self.__nation
+
+    # Değiştirici metotlar
+    def set_firstName(self, firstName): self.__firstName = firstName
+    def set_lastName(self, lastName): self.__lastName = lastName
+    def set_age(self, age): self.__age = age
+    def set_nation(self, nation): self.__nation = nation
+
+    def print_player(self): # Oyuncu bilgilerini yazdıran metot.
+        """
+        Oyuncunun veri özelliklerini yazdırır.
+        print_player metodunda erişimci metotları kullanın[cite: 36].
+        """
+        print(f"First Name: {self.get_firstName()}")
+        print(f"Last Name: {self.get_lastName()}")
+        print(f"Age: {self.get_age()}")
+        print(f"Nation: {self.get_nation()}")
+
+class LeaguePlayer(Player): # LeaguePlayer sınıfı, Player sınıfından miras alır.
+    """
+    Bir ligde oynayan bir oyuncuyu temsil eder.
+    Bu sınıf Player sınıfının alt sınıfı olacaktır[cite: 37].
+    LeaguePlayer sınıfının beş adet özel özelliği (branch, game_num, win_num, lost_num ve player_score) olacaktır[cite: 37].
+    Sınıfın uygun __init__, erişimci ve değiştirici metotları olmalıdır[cite: 38].
+    """
+    def __init__(self, firstName, lastName, age, nation, branch, game_num, win_num, lost_num, player_score): # Yapıcı metot.
+        super().__init__(firstName, lastName, age, nation) # Ana sınıfın yapıcı metodunu çağırır.
+        self.__branch = branch             # Oyuncunun branşını saklar.
+        self.__game_num = game_num         # Oynadığı lig maçı sayısını saklar.
+        self.__win_num = win_num           # Kazandığı lig maçı sayısını saklar.
+        self.__lost_num = lost_num         # Kaybettiği lig maçı sayısını saklar.
+        self.__player_score = player_score # Oyuncunun ligdeki skorunu/sayısını saklar.
+
+    # Erişimci metotlar
+    def get_branch(self): return self.__branch
+    def get_game_num(self): return self.__game_num
+    def get_win_num(self): return self.__win_num
+    def get_lost_num(self): return self.__lost_num
+    def get_player_score(self): return self.__player_score
+
+    # Değiştirici metotlar
+    def set_branch(self, branch): self.__branch = branch
+    def set_game_num(self, game_num): self.__game_num = game_num
+    def set_win_num(self, win_num): self.__win_num = win_num
+    def set_lost_num(self, lost_num): self.__lost_num = lost_num
+    def set_player_score(self, player_score): self.__player_score = player_score
+
+    def print_player(self): # Lig oyuncusu bilgilerini yazdıran metot.
+        """
+        Lig oyuncusunun veri özelliklerini yazdırır.
+        print_player metodunda, ana sınıfın print_player metodunu çağırın[cite: 39].
+        Ardından, LeaguePlayer sınıfının veri özelliklerini yazdırın. print_player metodunda erişimci metotları kullanın[cite: 39].
+        """
+        super().print_player() # Ana sınıfın print_player metodunu çağırır.
+        print(f"Branch: {self.get_branch()}")
+        print(f"Number of played league game: {self.get_game_num()}")
+        print(f"Number of win league game: {self.get_win_num()}")
+        print(f"Number of lost league game: {self.get_lost_num()}")
+        print(f"Number of player score: {self.get_player_score()}")
+
+    def statistics(self): # İstatistikleri hesaplayan ve yazdıran metot.
+        """
+        İstatistikleri hesaplar ve yazdırır (oyuncu_skoru / maç_sayısı)[cite: 40].
+        statistics metodunda, istatistikleri hesaplayın ve yazdırın (istatistikler = oyuncu_skoru / maç_sayısı)[cite: 40].
+        statistics metodunda oyuncu_skoru ve maç_sayısını almak için erişimci metotları kullanın[cite: 41].
+        """
+        if self.get_game_num() > 0: # Eğer oynanan maç sayısı 0'dan büyükse.
+            stat_value = self.get_player_score() / self.get_game_num()
+            print(f"Scores per league game: {stat_value:.2f}") # Örnekteki gibi iki ondalık basamakla formatlar.
+            return stat_value
+        else: # Maç oynanmamışsa.
+            print("Scores per league game: N/A (no games played)")
+            return 0
+
+    def points(self): # Puanları hesaplayan ve döndüren metot.
+        """
+        Puanları hesaplar ve döndürür (10*maç_sayısı + 3*kazanılan_maç - 2*kaybedilen_maç)[cite: 42].
+        points metodunda, puanları hesaplayın ve döndürün (puanlar = 10*maç_sayısı + 3*kazanılan_maç - 2*kaybedilen_maç)[cite: 42].
+        point metodunda maç_sayısı, kazanılan_maç ve kaybedilen_maç sayılarını almak için erişimci metotları kullanın[cite: 43].
+        """
+        calculated_points = (10 * self.get_game_num()) + \
+                            (3 * self.get_win_num()) - \
+                            (2 * self.get_lost_num())
+        # LeaguePlayer için points metodu "puanları döndürür" diyor[cite: 42].
+        # Ancak örnek çıktı "Player points: XXX" şeklinde yazdırıyor, bu da points çağrıldıktan sonra yapılmış gibi görünüyor.
+        # NationalPlayer points için "hesaplayın ve yazdırın" diyor.
+        # Burada değeri döndüreceğim, sürücü program bunu yazdıracak.
+        return calculated_points
+
+class NationalPlayer(LeaguePlayer): # NationalPlayer sınıfı, LeaguePlayer sınıfından miras alır.
+    """
+    Aynı zamanda milli takımda da oynayan bir lig oyuncusunu temsil eder.
+    Bu sınıf LeaguePlayer sınıfının alt sınıfı olacaktır[cite: 44].
+    NationalPlayer sınıfının iki adet özel özelliği (nationalGame_num ve nationalPlayer_score) olacaktır[cite: 44].
+    Sınıfın uygun __init__, erişimci ve değiştirici metotları olmalıdır[cite: 45].
+    """
+    def __init__(self, firstName, lastName, age, nation, branch,
+                 game_num, win_num, lost_num, player_score,
+                 nationalGame_num, nationalPlayer_score): # Yapıcı metot.
+        super().__init__(firstName, lastName, age, nation, branch,
+                         game_num, win_num, lost_num, player_score) # Ana sınıfın yapıcı metodunu çağırır.
+        self.__nationalGame_num = nationalGame_num           # Oynadığı milli maç sayısını saklar.
+        self.__nationalPlayer_score = nationalPlayer_score   # Milli takımdaki skorunu/sayısını saklar. Kaynak [48] nationalAll_score'a atıfta bulunuyor, ancak özellik nationalPlayer_score.
+
+    # Erişimci metotlar
+    def get_nationalGame_num(self): return self.__nationalGame_num
+    def get_nationalPlayer_score(self): return self.__nationalPlayer_score
+
+    # Değiştirici metotlar
+    def set_nationalGame_num(self, nationalGame_num): self.__nationalGame_num = nationalGame_num
+    def set_nationalPlayer_score(self, nationalPlayer_score): self.__nationalPlayer_score = nationalPlayer_score
+
+    def print_player(self): # Milli oyuncu bilgilerini yazdıran metot.
+        """
+        Milli oyuncunun veri özelliklerini yazdırır.
+        print_player metodunda, LeaguePlayer sınıfının print_player metodunu çağırın[cite: 46].
+        Ardından, NationalPlayer sınıfının veri özelliğini yazdırın. print_player metodunda erişimci metotları kullanın[cite: 46].
+        """
+        super().print_player() # LeaguePlayer'ın print_player metodunu çağırır.
+        print(f"Number of played national game: {self.get_nationalGame_num()}")
+        print(f"Number of player national score: {self.get_nationalPlayer_score()}")
+
+
+    def statistics(self): # Milli takım istatistiklerini hesaplayan ve yazdıran metot.
+        """
+        Milli takım istatistiklerini hesaplar ve yazdırır (milli_oyuncu_skoru / milli_maç_sayısı)[cite: 47].
+        statistics metodunda, istatistikleri hesaplayın ve yazdırın (istatistikler = milli_oyuncu_skoru / milli_maç_sayısı)[cite: 47].
+        statistics metodunda milli_oyuncu_skoru ve milli_maç_sayısını almak için erişimci metotları kullanın[cite: 48].
+        """
+        # LeaguePlayer'ın statistics metodunu ezer (override eder).
+        # Sorun, bunun milli takım istatistikleri için olduğunu ima ediyor.
+        if self.get_nationalGame_num() > 0: # Eğer oynanan milli maç sayısı 0'dan büyükse.
+            stat_value = self.get_nationalPlayer_score() / self.get_nationalGame_num()
+            print(f"Scores per national game: {stat_value:.2f}") # Örnekteki gibi formatlar.
+            return stat_value
+        else: # Milli maç oynanmamışsa.
+            print("Scores per national game: N/A (no national games played)")
+            return 0
+
+    def points(self): # Bir milli oyuncu için toplam puanları hesaplayan ve yazdıran metot.
+        """
+        Milli oyuncu için toplam puanları hesaplar ve yazdırır.
+        Puanlar = 15 * milli_maç_sayısı + (LeaguePlayer'ın puanları) [cite: 49]
+        points metodunda, puanları hesaplayın ve yazdırın (puanlar = 15* milli_maç_sayısı + (10*maç_sayısı +3*kazanılan_maç - 2*kaybedilen_maç))[cite: 49].
+        points metodunda milli_maç_sayısını almak için erişimci metotları kullanın. Ayrıca, LeaguePlayer sınıfının points metodunu kullanın[cite: 50].
+        """
+        league_points = super().points() # LeaguePlayer'ın points metodunu çağırır. [cite: 50]
+        # Kaynak [50] erişimci için nationalAll_score'dan bahsediyor, ancak özellik nationalPlayer_score.
+        # Verilen formül: 15 * milli_maç_sayısı + (LeaguePlayer'ın puanları).
+        # Bu şununla tutarlıdır: 15 * milli_maç_sayısı + (10*maç_sayısı + 3*kazanılan_maç - 2*kaybedilen_maç)
+        total_points = (15 * self.get_nationalGame_num()) + league_points
+        print(f"Player points: {total_points}")
+        return total_points
